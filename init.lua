@@ -44,7 +44,6 @@ What is Kickstart?
 Kickstart Guide:
 
   TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
-
     If you don't know what this means, type the following:
       - <escape key>
       - :
@@ -149,10 +148,25 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Option Camille
+
+vim.o.relativenumber = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 0
+vim.o.shiftwidth = 4
+vim.o.expandtab = false
+vim.o.scrolloff = 8
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undodir = os.getenv 'HOME' .. '/.vim/undodir'
+vim.o.undofile = true
+vim.o.smartindent = true
+-- vim.o.colorcolumn = '80'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -176,10 +190,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -835,7 +849,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'python', 'cpp' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -861,6 +875,20 @@ require('lazy').setup({
       --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    end,
+  },
+
+  {
+    'Diogo-ss/42-header.nvim',
+    lazy = false,
+    config = function()
+      local header = require '42header'
+      header.setup {
+        default_map = true, -- default Mapping <F1> in normal mode
+        auto_update = true, -- update header when saving
+        user = 'rtruvelo', -- your user
+        mail = 'rtruvelo@student.42lyon.fr', -- your mail
+      }
     end,
   },
 
